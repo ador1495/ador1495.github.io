@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-site-verification" content="2Ma-un9JABk26u3xCN1YmjTWD3GI94pCrlGxlHwQ1Gc" />
+  <meta name="msvalidate.01" content="D06B30E20711D6783FB207364D3F29C1" />
+  <title>Ador Rahman</title>
+  <meta name="description" content="Portfolio of Ador Rahman">
+  <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans-serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #050505;
+      --card-bg: rgba(12, 12, 12, 0.85);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --text-main: #ffffff;
+      --text-italic: #d4d4d8;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --btn-bg: #e5e5e5;
+      --btn-hover: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle Background Grid */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-size: 75px 75px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Starfield Canvas */
+    #stars-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Top Navigation Bar */
+    .navbar {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 36px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(5, 5, 5, 0.7);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .nav-btn {
+      background-color: #f4f4f5;
+      color: #09090b;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn:hover {
+      background-color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+    }
+
+    /* Main Hero Container */
+    .hero-container {
+      position: relative;
+      z-index: 5;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 64px;
+      align-items: center;
+      min-height: calc(100vh - 69px);
+    }
+
+    /* Left Column: Copy + Booking Card */
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.6rem, 4.5vw, 4.1rem);
+      line-height: 1.12;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero-title .italic-highlight {
+      display: block;
+      font-style: italic;
+      color: var(--text-italic);
+      font-weight: 600;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 440px;
+      margin-bottom: 36px;
+      font-weight: 400;
+    }
+
+    /* Consultation Box */
+    .consultation-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      max-width: 500px;
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .consultation-top {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .price-column {
+      padding: 24px;
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .calendar-icon {
+      width: 22px;
+      height: 22px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .session-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .session-duration {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .price-tag {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+
+    .price-currency {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .price-amount {
+      font-size: 1.95rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .price-usd {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    /* Right Inside Column: Features */
+    .features-column {
+      padding: 24px;
+    }
+
+    .features-heading {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .features-list li {
+      font-size: 0.8rem;
+      color: #e4e4e7;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .check-icon {
+      width: 13px;
+      height: 13px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* CTA Wrapper */
+    .consultation-bottom {
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .cta-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--btn-bg);
+      color: #09090b;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 14px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.18);
+      transition: all 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      background: var(--btn-hover);
+      box-shadow: 0 0 32px rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Right Column: Persona Profile Card */
+    .persona-wrapper {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .persona-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px 16px 22px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+    }
+
+    .persona-img-container {
+      width: 100%;
+      aspect-ratio: 1 / 1.03;
+      overflow: hidden;
+      border-radius: 4px;
+      margin-bottom: 18px;
+      background: #18181b;
+    }
+
+    .persona-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.08);
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .persona-card:hover .persona-img {
+      transform: scale(1.02);
+    }
+
+    .persona-name {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .persona-bio {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .persona-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 0 8px 16px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-2px);
+    }
+
+    .social-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 920px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: left;
+        gap: 48px;
+        padding-top: 48px;
+      }
+
+      .persona-wrapper {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .navbar {
+        padding: 14px 20px;
+      }
+
+      .consultation-top {
+        grid-template-columns: 1fr;
+      }
+
+      .price-column {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .persona-card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Grid & Starfield Background -->
+  <div class="bg-grid"></div>
+  <canvas id="stars-canvas"></canvas>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <a href="#" class="brand-name">Prince Willium Ador</a>
+    <a href="#book" class="nav-btn">Book a Call <span>&rarr;</span></a>
+  </header>
+
+  <!-- Main Hero Section -->
+  <main class="hero-container">
+    
+    <!-- Left Column -->
+    <section class="hero-content">
+      <h1 class="hero-title">
+        Wanna Win a<br />
+        study shoutcut?
+        <span class="italic-highlight">I'll Help You Get<br />Productivity.</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Top Tier Study Tools not Speed up your Growth, it turns complex path Super Comfortable 
+      </p>
+
+      <!-- Consultation Card -->
+      <div class="consultation-card" id="book">
+        <div class="consultation-top">
+          
+          <!-- Pricing Side -->
+          <div class="price-column">
+            <div>
+              <!-- Calendar Check Icon -->
+              <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M9 16l2 2 4-4"></path>
+              </svg>
+              <div class="session-title">1:1 Consultation</div>
+              <div class="session-duration">40 Minutes</div>
+            </div>
+
+            <div>
+              <div class="price-tag">
+                <span class="price-currency">BDT</span>
+                <span class="price-amount">650</span>
+              </div>
+              <div class="price-usd">~ $5 USD</div>
+            </div>
+          </div>
+
+          <!-- Checklist Side -->
+          <div class="features-column">
+            <div class="features-heading">What you can ask about:</div>
+            <ul class="features-list">
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Mathematics strategies
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Growth evaluation
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Resources guidance
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Board Exam preparation
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                CheatSheet and Mistakes diary what to avoid &amp; More.
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Bottom CTA Button -->
+        <div class="consultation-bottom">
+          <a href="#" class="cta-btn">Book Your Consultation Now!</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Persona Card -->
+    <aside class="persona-wrapper">
+      <div class="persona-card">
+        <div class="persona-img-container">
+          <!-- Replace src with your own portrait image -->
+          <img 
+            src="image.webp" 
+            alt="Mansi Uday Bhavsar" 
+            class="persona-img" 
+          />
+        </div>
+
+        <h2 class="persona-name">Prince Willium Ador</h2>
+        <p class="persona-bio">HSC 2027 &middot; Experience With 5+ Brilliant Gits</p>
+
+        <div class="persona-divider"></div>
+
+        <!-- Social Icons -->
+        <div class="social-links">
+          <!-- Instagram -->
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+          <!-- YouTube -->
+          <a href="#" class="social-btn" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Subtle Starfield Particle Script -->
+  <script>
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initStars();
+    }
+
+    function initStars() {
+      stars = [];
+      const numStars = Math.floor((canvas.width * canvas.height) / 9000);
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.3 + 0.3,
+          alpha: Math.random() * 0.75 + 0.15,
+          speed: (Math.random() * 0.008 + 0.002) * (Math.random() < 0.5 ? 1 : -1),
+          tint: Math.random() > 0.85 ? '#fef08a' : '#ffffff'
+        });
+      }
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const star of stars) {
+        star.alpha += star.speed;
+        if (star.alpha > 0.9 || star.alpha < 0.15) {
+          star.speed = -star.speed;
+        }
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = star.tint;
+        ctx.globalAlpha = Math.max(0.1, Math.min(1, star.alpha));
+        ctx.fill();
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animateStars();
+  </script>
+</body>
+</html>
